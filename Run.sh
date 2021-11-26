@@ -46,4 +46,4 @@ message="FG_ROOT is ""$FG_ROOT"" fgdata dir placed here." say
 message="FG_HOME is ""$FG_HOME"" configuration files here." say
 
 export LD_LIBRARY_PATH="$install_directory"/lib
-"$install_directory"/bin/fgfs --disable-hud-3d --prop:/sim/nasal-gc-threaded=true --prop:/sim/rendering/cache=true --prop:/sim/rendering/multithreading-mode=CullThreadPerCameraDrawThreadPerContext --prop:/sim/gui/current-style=0 --log-level=info \$*
+"$install_directory"/bin/fgfs --disable-hud-3d --prop:/sim/nasal-gc-threaded=true --prop:/sim/rendering/cache=true --prop:/sim/rendering/multithreading-mode=CullThreadPerCameraDrawThreadPerContext --prop:/sim/gui/current-style=0 --log-level=info $*
