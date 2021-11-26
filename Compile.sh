@@ -14,6 +14,54 @@
 # Licensed under GPL 3
 
 # Main script variables.
-download_directory="" # Directory where the source codes will be downloaded to.
-compiling_directory="" # Directory where temp buid files will be stored.
-install_directory="" # Final install directory.
+download_directory="/tmp/FGDC/Sources" # Directory where the source codes will be downloaded to.
+compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
+install_directory="$HOME/FlightGearFGDC" # Final install directory.
+
+cp Run.sh "$install_directory"/
+
+# Function to draw messages from the variable $message
+say () {
+  echo ""
+  echo "####################################################"
+  echo ">>>  ""$message"
+  echo "####################################################"
+  echo ""
+}
+
+# Compile function.
+build () {
+  make -j $(nproc)
+  make install
+}
+
+# PLIB
+component="PLIB"
+message="Compiling and Installing ""$component" say
+cd "$download_directory"/"$component"
+./configure --prefix="$install_directory"
+build
+
+# OSG
+component="OSG"
+message="Compiling and Installing ""$component" say
+cd "$compiling_directory"
+mkdir -p "$component" && cd "$component"
+cmake "$download_directory"/"$component" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
+build
+
+# SG
+component="SG"
+message="Compiling and Installing ""$component" say
+cd "$compiling_directory"
+mkdir -p "$component" && cd "$component"
+cmake "$download_directory"/"$component" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
+build
+
+# FG
+component="FG"
+message="Compiling and Installing ""$component" say
+cd "$compiling_directory"
+mkdir -p "$component" && cd "$component"
+cmake "$download_directory"/"$component" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
+build
