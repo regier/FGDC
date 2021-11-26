@@ -18,25 +18,65 @@ download_directory="/tmp/FGDC/Sources" # Directory where the source codes will b
 compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
 install_directory="$HOME/FlightGearFGDC" # Final install directory.
 
+# Function to draw messages from the variable $message
 say () {
-echo ""
-echo "####################################################"
-echo ">>>  ""$message"
-echo "####################################################"
-echo ""
+  echo ""
+  echo "####################################################"
+  echo ">>>  ""$message"
+  echo "####################################################"
+  echo ""
+}
+
+# Function to clone the required components.
+git_clone () {
+  message="Downloading ""$component" say
+  git clone --depth=1 --single-branch -b "$branch" "$repo" "$component"
+}
 
 # Creates required directories.
-message="Creating ""$download_directory"
-say
+# Creates download dir.
+message="Creating ""$download_directory" say
 mkdir -p "$download_directory"
-message="Creating ""$compiling_directory"
-say
+
+# Creates building dir.
+message="Creating ""$compiling_directory" say
 mkdir -p "$compiling_directory"
-message="Creating ""$install_directory"
-say
+
+# Creates install dir.
+message="Creating ""$install_directory" say
 mkdir -p "$install_directory"
 
+# Enters download dir where sources will be downloaded to.
+message="Switching to ""$download_directory"" directory." say
+cd "$download_directory"
+
 # PLIB
-wget -c http://plib.sourceforge.net/dist/plib-1.8.5.tar.gz "$download_directory"/plib.tar.gz
-cd "$download_directory"/
-tar zxf "$download_directory"/plib.tar.gz
+plib_file="plib-1.8.5" # PLIB filename/version
+message="Downloading PLIB" say
+curl "http://plib.sourceforge.net/dist/"$plib_file".tar.gz" -O # Downloads PLIB from SF.
+message="Extracting PLIB" say
+tar zxf "$download_directory"/""$plib_file".tar.gz" # Extracts PLIB
+rm -rf PLIB # Deletes previously extract PLIB if exists.
+mv "$plib_file" PLIB # Renames extracted dir to PLIB, easier to use at later stage.
+rm "$plib_file"".tar.gz" # Deletes compacted PLIB.
+
+# OpenSceneGraph
+repo="https://github.com/openscenegraph/OpenSceneGraph.git" # Repository.
+branch="OpenSceneGraph-3.6" # Branch to use.
+component="OSG" # Downloading OSG, SG or FG.
+rm -rf "$component"
+git_clone
+
+# SimGear
+repo="https://gitlab.com/flightgear/simgear.git" # Repository.
+branch="release/2020.3" # Branch to use.
+component="SG" # Downloading OSG, SG or FG.
+rm -rf "$component"
+git_clone
+
+# FlightGear
+repo="https://gitlab.com/flightgear/flightgear.git" # Repository.
+branch="release/2020.3" # Branch to use.
+component="FG" # Downloading OSG, SG or FG.
+rm -rf "$component"
+git_clone
