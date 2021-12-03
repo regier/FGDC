@@ -33,7 +33,7 @@ say () {
 export PATH="/usr/lib/ccache:${PATH}"
 
 # Compiler options
-compiler_flags="-O3 -march=native -mtune=native"
+compiler_flags="-march=native -mtune=native" # Set compiler flags here.
 export CFLAGS="$compiler_flags"
 export CXXFLAGS="$compiler_flags"
 
@@ -45,6 +45,8 @@ build () {
 
 # cmake function.
 cmaking () {
+  message="Compiling and Installing ""$component" say
+  mkdir -p "$compiling_directory"/"$component" && cd "$compiling_directory"/"$component"
   cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
 }
 
@@ -57,26 +59,15 @@ build
 
 # OSG
 component="OSG"
-message="Compiling and Installing ""$component" say
-cd "$compiling_directory"
-mkdir -p "$component" && cd "$component"
-#cmake "$download_directory"/"$component" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
 cmaking
 build
 
 # SG
 component="SG"
-message="Compiling and Installing ""$component" say
-cd "$compiling_directory"
-mkdir -p "$component" && cd "$component"
-#cmake "$download_directory"/"$component" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
 cmaking
 build
 
 # FG
 component="FG"
-message="Compiling and Installing ""$component" say
-cd "$compiling_directory"
-mkdir -p "$component" && cd "$component"
 cmaking
 build

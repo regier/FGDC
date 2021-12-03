@@ -30,6 +30,7 @@ say () {
 # Start of the "Runner" code. Script to launch FlightGear once it is compiled.
 
 mesa_glthread=true # Enables threaded GL.
+vblank_mode=0 # Disables VSync/FPS limit.
 
 # Welcome message.
 clear
