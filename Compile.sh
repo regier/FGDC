@@ -18,7 +18,7 @@ download_directory="/tmp/FGDC/Sources" # Directory where the source codes will b
 compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
 install_directory="$HOME/FlightGearFGDC" # Final install directory.
 
-cp Run.sh "$install_directory"/
+cp Run.sh "$install_directory"/ # Copy custom launcher options to install directory.
 
 # Function to draw messages from the variable $message
 say () {
@@ -28,6 +28,11 @@ say () {
   echo "####################################################"
   echo ""
 }
+
+# Compiler options
+compiler_flags="-O2 -march=native -mtune=native"
+export CFLAGS="$compiler_flags"
+export CXXFLAGS="$compiler_flags"
 
 # Compile function.
 build () {
