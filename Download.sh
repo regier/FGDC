@@ -18,6 +18,8 @@ download_directory="/tmp/FGDC/Sources" # Directory where the source codes will b
 compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
 install_directory="$HOME/FlightGearFGDC" # Final install directory.
 
+clear # Clear screen.
+
 # Function to draw messages from the variable $message
 say () {
   echo ""

@@ -29,8 +29,11 @@ say () {
   echo ""
 }
 
+# Makes script cache compiler output using cmake if cmake is available.
+export PATH="/usr/lib/ccache:${PATH}"
+
 # Compiler options
-compiler_flags="-O2 -march=native -mtune=native"
+compiler_flags="-O3 -march=native -mtune=native"
 export CFLAGS="$compiler_flags"
 export CXXFLAGS="$compiler_flags"
 
@@ -38,6 +41,11 @@ export CXXFLAGS="$compiler_flags"
 build () {
   make -j $(nproc)
   make install
+}
+
+# cmake function.
+cmaking () {
+  cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
 }
 
 # PLIB
@@ -52,7 +60,8 @@ component="OSG"
 message="Compiling and Installing ""$component" say
 cd "$compiling_directory"
 mkdir -p "$component" && cd "$component"
-cmake "$download_directory"/"$component" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
+#cmake "$download_directory"/"$component" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
+cmaking
 build
 
 # SG
@@ -60,7 +69,8 @@ component="SG"
 message="Compiling and Installing ""$component" say
 cd "$compiling_directory"
 mkdir -p "$component" && cd "$component"
-cmake "$download_directory"/"$component" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
+#cmake "$download_directory"/"$component" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
+cmaking
 build
 
 # FG
@@ -68,5 +78,5 @@ component="FG"
 message="Compiling and Installing ""$component" say
 cd "$compiling_directory"
 mkdir -p "$component" && cd "$component"
-cmake "$download_directory"/"$component" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory"
+cmaking
 build
