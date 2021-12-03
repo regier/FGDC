@@ -1,0 +1,27 @@
+#!/usr/bin/env xdg-open
+
+# ABOUT
+# Custom FlightGear Runner/Launcher by FGDC.
+#
+# You can copy this to your Desktop or add it to your panel so you can launch FG from here.
+# GitHub Repo: https://github.com/regier/FGDC
+#
+# AUTHOR
+# Created by Regier Kunkel on 26/11/2021
+# Contact: regier (dot) kunkel (at) gmail (dot) com
+#
+# LICENSE
+# Licensed under GPL 3
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Categories=Game;Simulation
+Terminal=false
+Icon=$HOME/FlightGearFGDC/share/icons/hicolor/scalable/apps/flightgear.svg
+Path=$HOME/FlightGearFGDC
+Exec=sh -c "cd $HOME/FlightGearFGDC && ./Run.sh --launcher"
+Name=FlightGearFGDC
+Comment=FlightGearFGDC Compiled with FlightGear FGDC
+Hidden=false
+Keywords=FGDC;Flight Simulator;Simulation;Flight;FlightGear;FlightGear Builder;FGB;Aviation;Airplanes
