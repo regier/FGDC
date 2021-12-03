@@ -27,23 +27,31 @@ say () {
   echo ""
 }
 
+# Start of the "Runner" code. Script to launch FlightGear once it is compiled.
+
+mesa_glthread=true # Enables threaded GL.
+
+# Welcome message.
 clear
 message="Welcome to FlightGear by FGDC!" say
 message="Starting FlightGear." say
 
+# Setting OpenSceneGraph variables for multi core systems.
 export OSG_NUM_DATABASE_THREADS=$(nproc)
 export OSG_OPTIMIZER=REMOVE_REDUNDANT_NODES
 export OSG_NUM_HTTP_DATABASE_THREADS=$(nproc)
 export OSG_GL_TEXTURE_STORAGE=on
 export OSG_COMPILE_CONTEXTS=on
-export FG_PROG="$install_directory"
-export FG_ROOT="$install_directory"/fgdata
-export FG_HOME="$install_directory"/fgfs
-mkdir -p "$FG_HOME"
+export FG_PROG="$install_directory" # Tells FG where it is installed.
+export FG_ROOT="$install_directory"/fgdata # Tells FG which directory is the data folder.
+export FG_HOME="$install_directory"/fgfs # Tell FG where to save and load configuration files and logs.
+mkdir -p "$FG_HOME" # Creates FG_HOME if it doesn't exists.
 
+# Tells user where and what each directory are.
 message="Be mindful of your FlightGear FGDC Directories." say
 message="FG_ROOT is ""$FG_ROOT"" fgdata dir placed here." say
 message="FG_HOME is ""$FG_HOME"" configuration files here." say
 
-export LD_LIBRARY_PATH="$install_directory"/lib
+export LD_LIBRARY_PATH="$install_directory"/lib # Makes FG load libraries from its install folder.
+# Launch FG with some optimizarions enabled. Like threaded Garbage Collector and threaded rendering stack.
 "$install_directory"/bin/fgfs --disable-hud-3d --prop:/sim/nasal-gc-threaded=true --prop:/sim/rendering/cache=true --prop:/sim/rendering/multithreading-mode=CullThreadPerCameraDrawThreadPerContext --prop:/sim/gui/current-style=0 --log-level=info $*
