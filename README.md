@@ -19,7 +19,8 @@ If something was already downloaded and compiled it will try to update it.
 
 Simply run one of the following scripts according to what you want to do.
 
-- **Dependencies.sh**: This will download all the required dependencies.
+- **Dependencies.sh**: This will download all the required dependencies. Not Implemented yet.
+- **Data-Download.sh**: This will download FlightGear Data.
 - **Download.sh**: This will download the source codes for PLIB, OSG, SG and FG.
 - **Compile.sh**: This will compile everything.
 - **Run.sh**: This will run FG if everything went well.
