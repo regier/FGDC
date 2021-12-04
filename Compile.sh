@@ -33,7 +33,7 @@ say () {
 export PATH="/usr/lib/ccache:${PATH}"
 
 # Compiler options.
-compiler_flags="-w -march=native -mtune=native -pipe" # Set compiler flags here.
+compiler_flags="-w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
 export CFLAGS="$compiler_flags"
 export CXXFLAGS="$compiler_flags"
 
@@ -51,7 +51,7 @@ build () {
 cmaking () {
   message="Compiling and Installing ""$component" say
   mkdir -p "$compiling_directory"/"$component" && cd "$compiling_directory"/"$component"
-  cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$install_directory" "$cmake_flags"
+  cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCMAKE_INSTALL_PREFIX="$install_directory" "$cmake_flags"
 }
 
 # PLIB
