@@ -50,9 +50,9 @@ mkdir -p "$FG_HOME" # Creates FG_HOME if it doesn't exists.
 
 # Tells user where and what each directory are.
 message="Be mindful of your FlightGear FGDC Directories." say
-message="FG_ROOT is ""$FG_ROOT"" fgdata dir placed here." say
-message="FG_HOME is ""$FG_HOME"" configuration files here." say
+message="FG_ROOT is $FG_ROOT" say
+message="FG_HOME is $FG_HOME" say
 
 export LD_LIBRARY_PATH="$install_directory"/lib # Makes FG load libraries from its install folder.
 # Launch FG with some optimizarions enabled. Like threaded Garbage Collector and threaded rendering stack.
-"$install_directory"/bin/fgfs --disable-hud-3d --prop:/sim/nasal-gc-threaded=true --prop:/sim/rendering/cache=true --prop:/sim/rendering/multithreading-mode=CullThreadPerCameraDrawThreadPerContext --prop:/sim/gui/current-style=0 --log-level=info $*
+"$install_directory"/bin/fgfs $*
