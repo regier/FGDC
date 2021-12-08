@@ -14,7 +14,7 @@
 # Licensed under GPL 3
 
 # Main script variables.
-install_directory="$HOME/FlightGearFGDC" # Final install directory.
+install_directory="$HOME/FGDC/FlightGear-Stable" # Final install directory.
 
 clear # Clear screen.
 
