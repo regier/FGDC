@@ -18,8 +18,15 @@ download_directory="/tmp/FGDC/Sources" # Directory where the source codes will b
 compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
 install_directory="$HOME/FGDC/FlightGear-Stable" # Final install directory.
 
+# Change variables to download and build the Next version
+# if the user chooses to do so with the "--next" argument.
+if [ "$*" = "--next" ]; then
+  install_directory="$HOME/FGDC/FlightGear-Next" # Final install directory.
+fi
+
 mkdir -p "$install_directory" # Precreates Install directory.
 cp FlightGearFGDC.desktop Run.sh "$install_directory"/ # Copy custom launcher to install directory.
+cp fgfsrc "$HOME/.fgfsrc" # Install custom settings for a better FlightGear Experience.
 
 # Function to draw messages from the variable $message
 say () {
@@ -29,6 +36,9 @@ say () {
   echo "####################################################"
   echo ""
 }
+
+clear
+message="Welcome to FGDC Compiler." say
 
 # Makes script cache compiler output using cmake if cmake is available.
 export PATH="/usr/lib/ccache:${PATH}"
@@ -51,7 +61,8 @@ build () {
 # So then after we can build the source code with the options we want.
 cmaking () {
   message="Compiling and Installing ""$component" say
-  mkdir -p "$compiling_directory"/"$component" && cd "$compiling_directory"/"$component"
+  rm -rf "$compiling_directory" # Deletes previous building files for a fresh build.
+  mkdir -p "$compiling_directory"/"$component" && cd "$compiling_directory"/"$component" # Recreates build dirs.
   cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCMAKE_INSTALL_PREFIX="$install_directory" $cmake_flags
 }
 
