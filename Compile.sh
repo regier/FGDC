@@ -51,7 +51,7 @@ build () {
 cmaking () {
   message="Compiling and Installing ""$component" say
   mkdir -p "$compiling_directory"/"$component" && cd "$compiling_directory"/"$component"
-  cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCMAKE_INSTALL_PREFIX="$install_directory" "$cmake_flags"
+  cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCMAKE_INSTALL_PREFIX="$install_directory" $cmake_flags
 }
 
 # PLIB
@@ -63,13 +63,13 @@ build
 
 # OSG
 component="OSG"
-export cmake_flags="-DBUILD_OSG_APPLICATIONS=OFF"
+export cmake_flags="-DBUILD_OSG_APPLICATIONS=OFF -DBUILD_OSG_DEPRECATED_SERIALIZERS=OFF"
 cmaking
 build
 
 # SG
 component="SG"
-export cmake_flags="-DENABLE_SIMD_CODE=ON -DBUILD_TESTING=OFF -DENABLE_TESTS=OFF"
+export cmake_flags="-DENABLE_SIMD_CODE=ON -DENABLE_TESTS=OFF"
 cmaking
 build
 
