@@ -16,7 +16,7 @@
 # Main script variables.
 download_directory="/tmp/FGDC/Sources" # Directory where the source codes will be downloaded to.
 compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
-install_directory="$HOME/FlightGearFGDC" # Final install directory.
+install_directory="$HOME/FGDC/FlightGear-Stable" # Final install directory.
 
 clear # Clear screen.
 
