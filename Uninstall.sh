@@ -38,5 +38,5 @@ clear
 message="Welcome to FGDC Uninstaller." say
 message="Removing FGDC FlightGear from your system." say
 # Deletes installed and downloaded files.
-rm -r "$download_directory" "$compiling_directory" "$install_directory" "$HOME/.fgfsrc"
-message="FGDC FlightGear removed."
+rm -rf "$download_directory" "$compiling_directory" "$install_directory" "$HOME/.fgfsrc"
+message="FGDC FlightGear removed." say
