@@ -24,6 +24,7 @@ Simply run one of the following scripts according to what you want to do.
 - **Download.sh**: This will download the source codes for PLIB, OSG, SG and FG.
 - **Compile.sh**: This will compile everything.
 - **Run.sh**: This will run FG if everything went well.
+- **Uninstall.sh**: This will remove FlightGear FGDC from your system. Both installed and downloaded files.
 
 ## Compatibility.
 
