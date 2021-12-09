@@ -15,8 +15,6 @@
 
 # Main script variables.
 download_directory="/tmp/FGDC/Sources" # Directory where the source codes will be downloaded to.
-compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
-install_directory="$HOME/FGDC/FlightGear-Stable" # Final install directory.
 fg_branch="release/2020.3" # FlightGear branch to use. Latest stable by default.
 osg_branch="OpenSceneGraph-3.6" # OpenSceneGraph branch to use. Latest stable by default.
 
@@ -38,6 +36,9 @@ say () {
 
 clear
 message="Welcome to FGDC Downloader." say
+
+# Precreates directories.
+mkdir -p "$download_directory"
 
 # Function to clone the required components.
 git_clone () {

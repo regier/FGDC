@@ -24,9 +24,6 @@ if [ "$*" = "--next" ]; then
   install_directory="$HOME/FGDC/FlightGear-Next" # Final install directory.
 fi
 
-mkdir -p "$install_directory" # Precreates Install directory.
-cp FlightGearFGDC.desktop Run.sh "$install_directory"/ # Copy custom launcher to install directory.
-cp fgfsrc "$HOME/.fgfsrc" # Install custom settings for a better FlightGear Experience.
 
 # Function to draw messages from the variable $message
 say () {
@@ -39,6 +36,9 @@ say () {
 
 clear
 message="Welcome to FGDC Compiler." say
+
+# Precreates directories.
+mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
 
 # Makes script cache compiler output using cmake if cmake is available.
 export PATH="/usr/lib/ccache:${PATH}"
@@ -65,6 +65,9 @@ cmaking () {
   mkdir -p "$compiling_directory"/"$component" && cd "$compiling_directory"/"$component" # Recreates build dirs.
   cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCMAKE_INSTALL_PREFIX="$install_directory" $cmake_flags
 }
+
+cp FlightGearFGDC.desktop Run.sh "$install_directory"/ # Copy custom launcher to install directory.
+cp fgfsrc "$HOME/.fgfsrc" # Install custom settings for a better FlightGear Experience.
 
 # PLIB
 component="PLIB"
