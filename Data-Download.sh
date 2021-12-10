@@ -59,7 +59,7 @@ message="Creating ""$install_directory" say
 mkdir -p "$install_directory"
 
 # FlightGear Data
-repo="https://gitlab.com/flightgear/fgdata.git" # Repository.
+repo="git://git.code.sf.net/p/flightgear/fgdata" # Repository.
 branch="$fg_branch" # Branch to use.
 component="fgdata"
 #rm -rf "$install_directory"/"$component"
