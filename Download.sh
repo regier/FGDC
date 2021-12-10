@@ -42,7 +42,7 @@ mkdir -p "$download_directory"
 
 # Function to clone the required components.
 git_clone () {
-  message="Checking if $component is already downloaded" say
+  message="Checking if $component is already downloaded on branch $branch" say
   # IF condition to check if the component directory already exists in the download dir.
   # If if finds a download dir with the expected name it will then switch to the correct
   # correct branch and update it. Otherwise, it will proceed to do a clean download.
