@@ -18,16 +18,6 @@ download_directory="/tmp/FGDC/Sources" # Directory where the source codes will b
 compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
 install_directory="$HOME/FGDC/FlightGear-Stable" # Final install directory.
 
-# Change variables to download and build the Next version
-# if the user chooses to do so with the "--next" argument.
-if [ "$*" = "--next" ]; then
-  install_directory="$HOME/FGDC/FlightGear-Next" # Final install directory.
-  cp FlightGearFGDC.desktop Run-Next.sh "$install_directory"/ # Copy custom launcher to install directory.
-else
-  cp FlightGearFGDC.desktop Run-Stable.sh "$install_directory"/ # Copy custom launcher to install directory.
-fi
-
-
 # Function to draw messages from the variable $message
 say () {
   echo ""
@@ -40,11 +30,21 @@ say () {
 clear
 message="Welcome to FGDC Compiler." say
 
-# Precreates directories.
-mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
-
 # Makes script cache compiler output using cmake if cmake is available.
 export PATH="/usr/lib/ccache:${PATH}"
+
+# Change variables to download and build the Next version
+# if the user chooses to do so with the "--next" argument.
+if [ "$*" = "--next" ]; then
+  install_directory="$HOME/FGDC/FlightGear-Next" # Final install directory.
+  # Precreates directories.
+  mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
+  cp FlightGearFGDC.desktop Run-Next.sh "$install_directory"/ # Copy custom launcher to install directory.
+else
+  # Precreates directories.
+  mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
+  cp FlightGearFGDC.desktop Run-Stable.sh "$install_directory"/ # Copy custom launcher to install directory.
+fi
 
 # Compiler options.
 compiler_flags="-w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
