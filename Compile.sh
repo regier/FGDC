@@ -22,6 +22,9 @@ install_directory="$HOME/FGDC/FlightGear-Stable" # Final install directory.
 # if the user chooses to do so with the "--next" argument.
 if [ "$*" = "--next" ]; then
   install_directory="$HOME/FGDC/FlightGear-Next" # Final install directory.
+  cp FlightGearFGDC.desktop Run-Next.sh "$install_directory"/ # Copy custom launcher to install directory.
+else
+  cp FlightGearFGDC.desktop Run-Stable.sh "$install_directory"/ # Copy custom launcher to install directory.
 fi
 
 
@@ -66,7 +69,6 @@ cmaking () {
   cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCMAKE_INSTALL_PREFIX="$install_directory" $cmake_flags
 }
 
-cp FlightGearFGDC.desktop Run.sh "$install_directory"/ # Copy custom launcher to install directory.
 cp fgfsrc "$HOME/.fgfsrc" # Install custom settings for a better FlightGear Experience.
 
 # PLIB
