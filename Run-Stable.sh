@@ -41,12 +41,15 @@ clear
 message="Welcome to FlightGear by FGDC!" say
 message="Starting FlightGear." say
 
+# Enabling multi threaded mesa subsystem.
+export mesa_glthread=true
 # Setting OpenSceneGraph variables for multi core systems.
 export OSG_NUM_DATABASE_THREADS=$(nproc)
 export OSG_OPTIMIZER=REMOVE_REDUNDANT_NODES
 export OSG_NUM_HTTP_DATABASE_THREADS=$(nproc)
 export OSG_GL_TEXTURE_STORAGE=on
 export OSG_COMPILE_CONTEXTS=on
+# Telling to FlightGear what is located where.
 export FG_PROG="$install_directory" # Tells FG where it is installed.
 export FG_ROOT="$install_directory"/fgdata # Tells FG which directory is the data folder.
 export FG_HOME="$install_directory"/fgfs # Tell FG where to save and load configuration files and logs.
