@@ -32,11 +32,10 @@ say () {
   spacesize="4"
   linesize=$(expr $spacesize + $length + $spacesize)
 
-  printf "╔" && printf "%0.s═" $(seq 1 $linesize) && printf "╗\n"
-  printf "║" && printf "%0.s " $(seq 1 $spacesize)
-  printf "$message"
-  printf "%0.s " $(seq 1 $spacesize) && printf "║\n"
-  printf "╚" && printf "%0.s═" $(seq 1 $linesize) && printf "╝\n"
+  tput sgr0
+  printf "╔"; printf "%0.s═" $(seq 1 $linesize); printf "╗\n"
+  printf "║"; printf "%0.s " $(seq 1 $spacesize); tput bold; printf "$message"; tput sgr0; printf "%0.s " $(seq 1 $spacesize); printf "║\n"
+  printf "╚"; printf "%0.s═" $(seq 1 $linesize); printf "╝\n"
 }
 
 clear
