@@ -23,3 +23,12 @@
 # Set the GUI style to a more hardware friendly and lighter type. Set to 1 to disable.
 #--prop:/sim/gui/current-style=1
 --prop:/sim/gui/current-style=0
+
+# Enables distance attenuation.
+--enable-distance-attenuation
+
+# Enables horizon effect, astro bodies look larger as they get close to the horizon line.
+--enable-horizon-effect
+
+# Enables Specular Highlights
+--enable-specular-highlight
