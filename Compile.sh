@@ -90,7 +90,7 @@ build
 
 # SG
 component="SG"
-export cmake_flags="-DENABLE_SIMD_CODE=ON -DENABLE_TESTS=OFF"
+export cmake_flags="-DENABLE_SIMD_CODE=ON -DENABLE_TESTS=OFF -DSIMGEAR_HEADLESS=ON"
 cmaking
 build
 
