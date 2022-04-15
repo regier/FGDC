@@ -39,7 +39,7 @@ export PATH="/usr/lib/ccache:${PATH}"
 
 # Change variables to download and build the Next version
 # if the user chooses to do so with the "--next" argument.
-if [ "$*" = "--next" ]; then
+if [[ "$*" =~ .*"--next".* ]]; then
   install_directory="$HOME/FGDC/FlightGear-Next" # Final install directory.
   # Precreates directories.
   mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
@@ -50,8 +50,13 @@ else
   cp FlightGearFGDC.desktop Run-Stable.sh "$install_directory"/ # Copy custom launcher to install directory.
 fi
 
-# Compiler options.
-compiler_flags="-w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
+# Compiler options. Enable core dump debug friendly options if --debug is used.
+if [[ "$*" =~ .*"--debug".* ]]; then
+  compiler_flags="-ggdb -w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
+else
+  compiler_flags="-w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
+fi
+
 export CFLAGS="$compiler_flags"
 export CXXFLAGS="$compiler_flags"
 
