@@ -13,10 +13,12 @@
 # LICENSE
 # Licensed under GPL 3
 
+
 # Main script variables.
 download_directory="/tmp/FGDC/Sources" # Directory where the source codes will be downloaded to.
 compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
 install_directory="$HOME/FGDC/FlightGear-Stable" # Final install directory.
+
 
 # Function to draw messages from the variable $message
 say () {
@@ -31,11 +33,30 @@ say () {
   printf "╚"; printf "%0.s═" $(seq 1 $linesize); printf "╝\n"
 }
 
-clear
-message="Welcome to FGDC Compiler." say
 
-# Makes script cache compiler output using cmake if cmake is available.
-export PATH="/usr/lib/ccache:${PATH}"
+fgdc_start () {
+	clear
+
+	# Compiler options. Enable core dump debug friendly options if --debug is used.
+	if [[ "$*" =~ .*"--debug".* ]]; then
+	  compiler_flags="-ggdb -w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
+	elif [[ "$*" =~ .*"--performance".* ]]; then
+		compiler_flags="-w -march=native -Ofast -mtune=native -pipe" # Set compiler flags here.
+	else
+	  compiler_flags="-w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
+	fi
+
+	message="Welcome to FGDC Compiler." say
+}
+
+set_vars () {
+	# Makes script cache compiler output using cmake if cmake is available.
+	export PATH="/usr/lib/ccache:${PATH}"
+	export CFLAGS="$compiler_flags"
+	export CXXFLAGS="$compiler_flags"
+}
+
+
 
 # Change variables to download and build the Next version
 # if the user chooses to do so with the "--next" argument.
@@ -50,15 +71,6 @@ else
   cp FlightGearFGDC.desktop Run-Stable.sh "$install_directory"/ # Copy custom launcher to install directory.
 fi
 
-# Compiler options. Enable core dump debug friendly options if --debug is used.
-if [[ "$*" =~ .*"--debug".* ]]; then
-  compiler_flags="-ggdb -w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
-else
-  compiler_flags="-w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
-fi
-
-export CFLAGS="$compiler_flags"
-export CXXFLAGS="$compiler_flags"
 
 # build function.
 # This function will compile the source code for each component.
@@ -67,6 +79,7 @@ build () {
   make -j $(nproc)
   make install
 }
+
 
 # cmake function.
 # For OSG, SG and FG, this function will run cmake to set build options.
@@ -78,7 +91,16 @@ cmaking () {
   cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCMAKE_INSTALL_PREFIX="$install_directory" $cmake_flags
 }
 
+
 cp fgfsrc "$HOME/.fgfsrc" # Install custom settings for a better FlightGear Experience.
+
+# Start
+fgdc_start
+
+
+# Set vars
+set_vars
+
 
 # PLIB
 component="PLIB"
@@ -87,17 +109,20 @@ cd "$download_directory"/"$component"
 ./configure --prefix="$install_directory"
 build
 
+
 # OSG
 component="OSG"
 export cmake_flags="-DBUILD_OSG_APPLICATIONS=OFF -DBUILD_OSG_DEPRECATED_SERIALIZERS=OFF"
 cmaking
 build
 
+
 # SG
 component="SG"
 export cmake_flags="-DENABLE_SIMD_CODE=ON -DENABLE_TESTS=OFF"
 cmaking
 build
+
 
 # FG
 component="FG"
