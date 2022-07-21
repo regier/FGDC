@@ -43,7 +43,7 @@ fgdc_start () {
 	elif [[ "$*" =~ .*"--performance".* ]]; then
 		compiler_flags="-w -march=native -Ofast -mtune=native -pipe" # Set compiler flags here.
 	else
-	  compiler_flags="-w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
+	  compiler_flags="-w -march=native -O3 -mtune=native -pipe" # Set compiler flags here.
 	fi
 
 	message="Welcome to FGDC Compiler." say
