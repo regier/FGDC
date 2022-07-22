@@ -64,7 +64,7 @@ export OSG_COMPILE_CONTEXTS=on
 # Telling to FlightGear what is located where.
 export FG_PROG="$install_directory" # Tells FG where it is installed.
 export FG_ROOT="$fgdata" # Tells FG which directory is the data folder.
-export FG_HOME="$fgfs" # Tell FG where to save and load configuration files and logs.
+export FG_HOME="$fghome" # Tell FG where to save and load configuration files and logs.
 
 mkdir -p "$FG_HOME" # Creates FG_HOME if it doesn't exists.
 mkdir -p "$terrasync" "$aircraft"
