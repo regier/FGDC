@@ -27,12 +27,12 @@ if [[ "$*" =~ .*"--next".* ]]; then
   install_directory="$fgdc/FlightGear-$release" # Final install directory.
   # Precreates directories.
   mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
-  cp FlightGearFGDC.desktop Run-Next.sh "$install_directory"/ # Copy custom launcher to install directory.
+  cp FlightGearFGDC.desktop Run-Next.sh "$install_directory/" # Copy custom launcher to install directory.
 else
   release="Stable"
   # Precreates directories.
   mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
-  cp FlightGearFGDC.desktop Run-Stable.sh "$install_directory"/ # Copy custom launcher to install directory.
+  cp FlightGearFGDC.desktop Run-Stable.sh "$install_directory/" # Copy custom launcher to install directory.
 fi
 
 compiling_directory="$fgdc/Build-$release" # Directory where temp buid files will be stored.
