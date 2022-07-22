@@ -54,12 +54,20 @@ export FG_PROG="$install_directory" # Tells FG where it is installed.
 export FG_ROOT="$install_directory"/fgdata # Tells FG which directory is the data folder.
 export FG_HOME="$install_directory"/fgfs # Tell FG where to save and load configuration files and logs.
 mkdir -p "$FG_HOME" # Creates FG_HOME if it doesn't exists.
+mkdir -p "$install_directory/TerraSync" "$install_directory/Aircraft"
 
 # Tells user where and what each directory are.
 message="Be mindful of your FlightGear FGDC Directories." say
 message="FG_ROOT is $FG_ROOT" say
 message="FG_HOME is $FG_HOME" say
+message="Install your aircraft in $install_directory/Aircraft" say
+
+fg_options="--prop:/sim/nasal-gc-threaded=true --prop:/sim/rendering/cache=true \
+--prop:/sim/rendering/multithreading-mode=CullThreadPerCameraDrawThreadPerContext \
+--prop:/sim/gui/current-style=0 \
+--terrasync-dir=$install_directory/TerraSync --downloaddir=$install_directory/TerraSync \
+--fg-scenery=$install_directory/fgdata"
 
 export LD_LIBRARY_PATH="$install_directory"/lib # Makes FG load libraries from its install folder.
 # Launch FG with some optimizarions enabled. Like threaded Garbage Collector and threaded rendering stack.
-"$install_directory"/bin/fgfs $*
+"$install_directory"/bin/fgfs $fg_options $*

@@ -92,7 +92,7 @@ cmaking () {
 }
 
 
-cp fgfsrc "$HOME/.fgfsrc" # Install custom settings for a better FlightGear Experience.
+# cp fgfsrc "$HOME/.fgfsrc" # Install custom settings for a better FlightGear Experience.
 
 # Start
 fgdc_start
