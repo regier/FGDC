@@ -14,22 +14,17 @@
 # Licensed under GPL 3
 
 # Main script variables.
-release="Stable"
-fgdc_directory="$HOME/FGDC"
-fgdc="$fgdc_directory"
-install_directory="$fgdc/FlightGear-$release" # Final install directory.
-download_directory="$install_directory"
-fg_branch="release/2020.3"
-
-# Change variables to download and build the Next version
-# if the user chooses to do so with the "--next" argument.
-if [ "$*" = "--next" ]; then
+if [[ "$*" =~ .*"--next".* ]]; then
   release="Next"
-  install_directory="$fgdc/FlightGear-$release" # Final install directory.
-  download_directory="$install_directory"
-  fg_branch="next" # Sets downloader to use the latest dev version.
+  fg_branch="next"
+else
+  release="Stable"
+  fg_branch="release/2020.3"
 fi
 
+fgdc_directory="$HOME/FGDC"
+fgdc="$fgdc_directory"
+download_directory="$fgdc"
 
 clear # Clear screen.
 
@@ -66,10 +61,7 @@ git_clone () {
 message="Welcome to FlightGear Data Downloader" say
 message="Getting Data release $release"
 
-# Creates required directories.
-# Creates install dir.
-message="Creating $install_directory" say
-mkdir -p "$install_directory"
+mkdir -p "$download_directory"
 
 # FlightGear Data
 repo="git://git.code.sf.net/p/flightgear/fgdata" # Repository.
