@@ -126,6 +126,6 @@ build
 
 # FG
 component="FG"
-export cmake_flags="-DFG_BUILD_TYPE=Release -DBUILD_TESTING=OFF"
+export cmake_flags="-DENABLE_COMPOSITOR=ON -DFG_BUILD_TYPE=Release -DBUILD_TESTING=OFF"
 cmaking
 build
