@@ -54,9 +54,11 @@ git_clone () {
   # correct branch and update it. Otherwise, it will proceed to do a clean download.
   if [ -d "$download_directory/$component" ]; then
     message="$component already downloaded. Updating it." say
+	message="git checkout $branch" say
     cd "$download_directory/$component" && git checkout "$branch" && git pull
   else
     message="$component was not found. Downloading it" say
+	message="git clone -b $branch $repo $component" say
     cd "$download_directory" && git clone -b "$branch" "$repo" "$component"
   fi
 }
