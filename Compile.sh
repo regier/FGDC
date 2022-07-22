@@ -15,9 +15,28 @@
 
 
 # Main script variables.
-download_directory="/tmp/FGDC/Sources" # Directory where the source codes will be downloaded to.
-compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
-install_directory="$HOME/FGDC/FlightGear-Stable" # Final install directory.
+release="Stable"
+fgdc_directory="$HOME/FGDC"
+fgdc="$fgdc_directory"
+download_directory="$fgdc/Sources" # Directory where the source codes will be downloaded to.
+
+# Change variables to download and build the Next version
+# if the user chooses to do so with the "--next" argument.
+if [[ "$*" =~ .*"--next".* ]]; then
+  release="Next"
+  install_directory="$fgdc/FlightGear-$release" # Final install directory.
+  # Precreates directories.
+  mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
+  cp FlightGearFGDC.desktop Run-Next.sh "$install_directory"/ # Copy custom launcher to install directory.
+else
+  release="Stable"
+  # Precreates directories.
+  mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
+  cp FlightGearFGDC.desktop Run-Stable.sh "$install_directory"/ # Copy custom launcher to install directory.
+fi
+
+compiling_directory="$fgdc/Build-$release" # Directory where temp buid files will be stored.
+install_directory="$fgdc/FlightGear-$release" # Final install directory.
 
 
 # Function to draw messages from the variable $message
@@ -47,6 +66,7 @@ fgdc_start () {
 	fi
 
 	message="Welcome to FGDC Compiler." say
+    message="Will compile FlightGear $release" say
 }
 
 set_vars () {
@@ -55,21 +75,6 @@ set_vars () {
 	export CFLAGS="$compiler_flags"
 	export CXXFLAGS="$compiler_flags"
 }
-
-
-
-# Change variables to download and build the Next version
-# if the user chooses to do so with the "--next" argument.
-if [[ "$*" =~ .*"--next".* ]]; then
-  install_directory="$HOME/FGDC/FlightGear-Next" # Final install directory.
-  # Precreates directories.
-  mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
-  cp FlightGearFGDC.desktop Run-Next.sh "$install_directory"/ # Copy custom launcher to install directory.
-else
-  # Precreates directories.
-  mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
-  cp FlightGearFGDC.desktop Run-Stable.sh "$install_directory"/ # Copy custom launcher to install directory.
-fi
 
 
 # build function.
@@ -85,9 +90,9 @@ build () {
 # For OSG, SG and FG, this function will run cmake to set build options.
 # So then after we can build the source code with the options we want.
 cmaking () {
-  message="Compiling and Installing ""$component" say
+  message="Compiling and Installing $component" say
   rm -rf "$compiling_directory" # Deletes previous building files for a fresh build.
-  mkdir -p "$compiling_directory"/"$component" && cd "$compiling_directory"/"$component" # Recreates build dirs.
+  mkdir -p "$compiling_directory/$component" && cd "$compiling_directory/$component" # Recreates build dirs.
   cmake "$download_directory"/"$component" -DCMAKE_CXX_FLAGS="$compiler_flags" -DCMAKE_C_FLAGS="$compiler_flags" -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE=-DNDEBUG -DCMAKE_INSTALL_PREFIX="$install_directory" $cmake_flags
 }
 
@@ -104,8 +109,8 @@ set_vars
 
 # PLIB
 component="PLIB"
-message="Compiling and Installing ""$component" say
-cd "$download_directory"/"$component"
+message="Compiling and Installing $component" say
+cd "$download_directory/$component"
 ./configure --prefix="$install_directory"
 build
 

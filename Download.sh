@@ -14,14 +14,18 @@
 # Licensed under GPL 3
 
 # Main script variables.
-download_directory="/tmp/FGDC/Sources" # Directory where the source codes will be downloaded to.
+release="Stable"
+fgdc_directory="$HOME/FGDC"
+fgdc="$fgdc_directory"
+download_directory="$fgdc/Sources" # Directory where the source codes will be downloaded to.
 fg_branch="release/2020.3" # FlightGear branch to use. Latest stable by default.
 osg_branch="OpenSceneGraph-3.6" # OpenSceneGraph branch to use. Latest stable by default.
 
 # Change variables to download and build the Next version
 # if the user chooses to do so with the "--next" argument.
 if [ "$*" = "--next" ]; then
-  install_directory="$HOME/FGDC/FlightGear-Next" # Final install directory.
+  release="Next"
+  install_directory="$fgdc/FlightGear-$release" # Final install directory.
   fg_branch="next" # Sets downloader to use the latest dev version.
 fi
 
@@ -34,12 +38,13 @@ say () {
 
   tput sgr0
   printf "╔"; printf "%0.s═" $(seq 1 $linesize); printf "╗\n"
-  printf "║"; printf "%0.s " $(seq 1 $spacesize); tput bold; printf "$message"; tput sgr0; printf "%0.s " $(seq 1 $spacesize); printf "║\n"
+  printf "║"; printf "%0.s " $(seq 1 $spacesize); tput bold; printf "$message"; tput sgr0;   printf "%0.s " $(seq 1 $spacesize); printf "║\n"
   printf "╚"; printf "%0.s═" $(seq 1 $linesize); printf "╝\n"
 }
 
 clear
 message="Welcome to FGDC Downloader." say
+message="Will download FlightGear $release"
 
 # Precreates directories.
 mkdir -p "$download_directory"
@@ -61,11 +66,11 @@ git_clone () {
 
 # Creates required directories.
 # Creates download dir.
-message="Creating ""$download_directory" say
+message="Creating $download_directory" say
 mkdir -p "$download_directory"
 
 # Enters download dir where sources will be downloaded to.
-message="Switching to ""$download_directory"" directory." say
+message="Switching to $download_directory directory." say
 cd "$download_directory"
 
 # PLIB
