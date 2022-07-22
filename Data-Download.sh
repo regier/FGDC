@@ -14,14 +14,18 @@
 # Licensed under GPL 3
 
 # Main script variables.
-install_directory="$HOME/FGDC/FlightGear-Stable" # Final install directory.
+release="Stable"
+fgdc_directory="$HOME/FGDC"
+fgdc="$fgdc_directory"
+install_directory="$fgdc/FlightGear-$release" # Final install directory.
 download_directory="$install_directory"
 fg_branch="release/2020.3"
 
 # Change variables to download and build the Next version
 # if the user chooses to do so with the "--next" argument.
 if [ "$*" = "--next" ]; then
-  install_directory="$HOME/FGDC/FlightGear-Next" # Final install directory.
+  release="Next"
+  install_directory="$fgdc/FlightGear-$release" # Final install directory.
   download_directory="$install_directory"
   fg_branch="next" # Sets downloader to use the latest dev version.
 fi
@@ -38,7 +42,7 @@ say () {
 
   tput sgr0
   printf "╔"; printf "%0.s═" $(seq 1 $linesize); printf "╗\n"
-  printf "║"; printf "%0.s " $(seq 1 $spacesize); tput bold; printf "$message"; tput sgr0; printf "%0.s " $(seq 1 $spacesize); printf "║\n"
+  printf "║"; printf "%0.s " $(seq 1 $spacesize); tput bold; printf "$message"; tput sgr0;   printf "%0.s " $(seq 1 $spacesize); printf "║\n"
   printf "╚"; printf "%0.s═" $(seq 1 $linesize); printf "╝\n"
 }
 
@@ -57,9 +61,12 @@ git_clone () {
   fi
 }
 
+message="Welcome to FlightGear Data Downloader" say
+message="Getting Data release $release"
+
 # Creates required directories.
 # Creates install dir.
-message="Creating ""$install_directory" say
+message="Creating $install_directory" say
 mkdir -p "$install_directory"
 
 # FlightGear Data
