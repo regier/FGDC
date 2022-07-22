@@ -59,8 +59,6 @@ fgdc_start () {
 	# Compiler options. Enable core dump debug friendly options if --debug is used.
 	if [[ "$*" =~ .*"--debug".* ]]; then
 	  compiler_flags="-ggdb -w -march=native -O2 -mtune=native -pipe" # Set compiler flags here.
-	elif [[ "$*" =~ .*"--performance".* ]]; then
-		compiler_flags="-w -march=native -Ofast -mtune=native -pipe" # Set compiler flags here.
 	else
 	  compiler_flags="-w -march=native -O3 -mtune=native -pipe" # Set compiler flags here.
 	fi
