@@ -65,8 +65,8 @@ message="Install your aircraft in $install_directory/Aircraft" say
 fg_options="--prop:/sim/nasal-gc-threaded=true --prop:/sim/rendering/cache=true \
 --prop:/sim/rendering/multithreading-mode=CullThreadPerCameraDrawThreadPerContext \
 --prop:/sim/gui/current-style=0 \
---terrasync-dir=$install_directory/TerraSync --downloaddir=$install_directory/TerraSync \
---fg-scenery=$install_directory/fgdata"
+--terrasync-dir=$install_directory/TerraSync --download-dir=$install_directory/TerraSync \
+--fg-scenery=$install_directory/fgdata --fg-aircraft=$install_directory/Aircraft"
 
 export LD_LIBRARY_PATH="$install_directory"/lib # Makes FG load libraries from its install folder.
 # Launch FG with some optimizarions enabled. Like threaded Garbage Collector and threaded rendering stack.
