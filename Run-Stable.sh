@@ -14,9 +14,19 @@
 # Licensed under GPL 3
 
 # Main script variables.
-download_directory="/tmp/FGDC/Sources" # Directory where the source codes will be downloaded to.
-compiling_directory="/tmp/FGDC/Build" # Directory where temp buid files will be stored.
-install_directory="$HOME/FGDC/FlightGear-Stable" # Final install directory.
+release="Stable"
+fgdc_directory="$HOME/FGDC"
+fgdc="$fgdc_directory"
+download_directory="$fgdc/Sources" # Directory where the source codes will be downloaded to.
+compiling_directory="$fgdc/Build-$release" # Directory where temp buid files will be stored.
+install_directory="$fgdc/FlightGear-$release" # Final install directory.
+terrasync="$fgdc/TerraSync"
+downloaddir="$terrasync"
+aircraft="$fgdc/Aircraft"
+fgdata="$install_directory/fgdata"
+scenery="$fgdata"
+fghome="$install_directory/fgfs"
+ldlib="$install_directory/lib"
 
 # Function to draw messages from the variable $message
 say () {
@@ -27,7 +37,7 @@ say () {
 
   tput sgr0
   printf "╔"; printf "%0.s═" $(seq 1 $linesize); printf "╗\n"
-  printf "║"; printf "%0.s " $(seq 1 $spacesize); tput bold; printf "$message"; tput sgr0; printf "%0.s " $(seq 1 $spacesize); printf "║\n"
+  printf "║"; printf "%0.s " $(seq 1 $spacesize); tput bold; printf "$message"; tput sgr0;   printf "%0.s " $(seq 1 $spacesize); printf "║\n"
   printf "╚"; printf "%0.s═" $(seq 1 $linesize); printf "╝\n"
 }
 
@@ -39,7 +49,7 @@ vblank_mode=0 # Disables VSync/FPS limit.
 # Welcome message.
 clear
 message="Welcome to FlightGear by FGDC!" say
-message="Starting FlightGear." say
+message="Starting FlightGear $release!" say
 
 # Enabling multi threaded mesa subsystem.
 export mesa_glthread=true
@@ -51,23 +61,25 @@ export OSG_GL_TEXTURE_STORAGE=on
 export OSG_COMPILE_CONTEXTS=on
 # Telling to FlightGear what is located where.
 export FG_PROG="$install_directory" # Tells FG where it is installed.
-export FG_ROOT="$install_directory"/fgdata # Tells FG which directory is the data folder.
-export FG_HOME="$install_directory"/fgfs # Tell FG where to save and load configuration files and logs.
+export FG_ROOT="$fgdata" # Tells FG which directory is the data folder.
+export FG_HOME="$fgfs" # Tell FG where to save and load configuration files and logs.
+
 mkdir -p "$FG_HOME" # Creates FG_HOME if it doesn't exists.
-mkdir -p "$install_directory/TerraSync" "$install_directory/Aircraft"
+mkdir -p "$terrasync" "$aircraft"
 
 # Tells user where and what each directory are.
 message="Be mindful of your FlightGear FGDC Directories." say
 message="FG_ROOT is $FG_ROOT" say
 message="FG_HOME is $FG_HOME" say
-message="Install your aircraft in $install_directory/Aircraft" say
+message="TerraSync is $terrasync" say
+message="Install your aircraft to $aircraft" say
 
 fg_options="--prop:/sim/nasal-gc-threaded=true --prop:/sim/rendering/cache=true \
 --prop:/sim/rendering/multithreading-mode=CullThreadPerCameraDrawThreadPerContext \
 --prop:/sim/gui/current-style=0 \
---terrasync-dir=$install_directory/TerraSync --download-dir=$install_directory/TerraSync \
---fg-scenery=$install_directory/fgdata --fg-aircraft=$install_directory/Aircraft"
+--terrasync-dir=$terrasync --download-dir=$downloaddir \
+--fg-scenery=$scenery --fg-aircraft=$aircraft"
 
-export LD_LIBRARY_PATH="$install_directory"/lib # Makes FG load libraries from its install folder.
+export LD_LIBRARY_PATH="$ldlib" # Makes FG load libraries from its install folder.
 # Launch FG with some optimizarions enabled. Like threaded Garbage Collector and threaded rendering stack.
 "$install_directory"/bin/fgfs $fg_options $*
