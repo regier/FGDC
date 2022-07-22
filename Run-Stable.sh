@@ -15,6 +15,7 @@
 
 # Main script variables.
 release="Stable"
+fg_branch="release/2020.3"
 fgdc_directory="$HOME/FGDC"
 fgdc="$fgdc_directory"
 download_directory="$fgdc/Sources" # Directory where the source codes will be downloaded to.
@@ -23,7 +24,8 @@ install_directory="$fgdc/FlightGear-$release" # Final install directory.
 terrasync="$fgdc/TerraSync"
 downloaddir="$terrasync"
 aircraft="$fgdc/Aircraft"
-fgdata="$install_directory/fgdata"
+#fgdata="$install_directory/fgdata"
+fgdata="$fgdc/fgdata"
 scenery="$fgdata"
 fghome="$install_directory/fgfs"
 ldlib="$install_directory/lib"
@@ -81,5 +83,7 @@ fg_options="--prop:/sim/nasal-gc-threaded=true --prop:/sim/rendering/cache=true 
 --fg-scenery=$scenery --fg-aircraft=$aircraft"
 
 export LD_LIBRARY_PATH="$ldlib" # Makes FG load libraries from its install folder.
+cd "$fgdata" && git checkout "$fg_branch"
+cd "$install_directory"
 # Launch FG with some optimizarions enabled. Like threaded Garbage Collector and threaded rendering stack.
 "$install_directory"/bin/fgfs $fg_options $*
