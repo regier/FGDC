@@ -14,20 +14,17 @@
 # Licensed under GPL 3
 
 # Main script variables.
-release="Stable"
+if [[ "$*" =~ .*"--next".* ]]; then
+  release="Next"
+  fg_branch="next"
+else
+  release="Stable"
+  fg_branch="release/2020.3"
+fi
 fgdc_directory="$HOME/FGDC"
 fgdc="$fgdc_directory"
 download_directory="$fgdc/Sources" # Directory where the source codes will be downloaded to.
-fg_branch="release/2020.3" # FlightGear branch to use. Latest stable by default.
 osg_branch="OpenSceneGraph-3.6" # OpenSceneGraph branch to use. Latest stable by default.
-
-# Change variables to download and build the Next version
-# if the user chooses to do so with the "--next" argument.
-if [ "$*" = "--next" ]; then
-  release="Next"
-  install_directory="$fgdc/FlightGear-$release" # Final install directory.
-  fg_branch="next" # Sets downloader to use the latest dev version.
-fi
 
 # Function to draw messages from the variable $message
 say () {

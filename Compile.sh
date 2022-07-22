@@ -15,28 +15,22 @@
 
 
 # Main script variables.
-release="Stable"
-fgdc_directory="$HOME/FGDC"
-fgdc="$fgdc_directory"
-download_directory="$fgdc/Sources" # Directory where the source codes will be downloaded to.
-
 # Change variables to download and build the Next version
 # if the user chooses to do so with the "--next" argument.
 if [[ "$*" =~ .*"--next".* ]]; then
   release="Next"
-  install_directory="$fgdc/FlightGear-$release" # Final install directory.
-  # Precreates directories.
-  mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
-  cp FlightGearFGDC.desktop Run-Next.sh "$install_directory/" # Copy custom launcher to install directory.
 else
   release="Stable"
-  # Precreates directories.
-  mkdir -p "$install_directory" "$compiling_directory" "$install_directory"
-  cp FlightGearFGDC.desktop Run-Stable.sh "$install_directory/" # Copy custom launcher to install directory.
 fi
 
+fgdc_directory="$HOME/FGDC"
+fgdc="$fgdc_directory"
+download_directory="$fgdc/Sources" # Directory where the source codes will be downloaded to.
 compiling_directory="$fgdc/Build-$release" # Directory where temp buid files will be stored.
 install_directory="$fgdc/FlightGear-$release" # Final install directory.
+
+mkdir -p "$install_directory" "$compiling_directory" "$install_directory" # Precreates directories.
+cp FlightGearFGDC.desktop Run.sh "$install_directory/" # Copy custom launcher to install directory.
 
 
 # Function to draw messages from the variable $message
