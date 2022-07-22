@@ -30,7 +30,7 @@ compiling_directory="$fgdc/Build-$release" # Directory where temp buid files wil
 install_directory="$fgdc/FlightGear-$release" # Final install directory.
 
 mkdir -p "$install_directory" "$compiling_directory" "$install_directory" # Precreates directories.
-cp FlightGearFGDC.desktop Run.sh "$install_directory/" # Copy custom launcher to install directory.
+cp FlightGearFGDC.desktop "Run-$release.sh" "$install_directory/" # Copy custom launcher to install directory.
 
 
 # Function to draw messages from the variable $message
